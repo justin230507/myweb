@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>個人介紹｜你的名字</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --surface: #ffffff;
+      --surface-alt: #f0f2f8;
+      --text: #181c28;
+      --muted: #5c6478;
+      --accent: #3b6ef6;
+      --accent-soft: rgba(59, 110, 246, 0.12);
+      --border: #e3e7f0;
+      --shadow: 0 12px 32px rgba(24, 28, 40, 0.06);
+      --radius: 18px;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0f131d;
+      --surface: #171c2b;
+      --surface-alt: #1f263a;
+      --text: #eef1f8;
+      --muted: #9aa3ba;
+      --accent: #6893ff;
+      --accent-soft: rgba(104, 147, 255, 0.15);
+      --border: #273049;
+      --shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      padding: 24px 16px 64px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* 頂部工具列 */
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 16px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 15px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.92;
+    }
+
+    /* 卡片區塊 */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    /* 個人主視覺 */
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .hero-info {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .role {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 12px;
+    }
+
+    .bio {
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* 技能標籤 */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* 經歷與專案列表 */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .item-box {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .item-meta {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .item-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .item-desc {
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    /* 聯絡資訊 */
+    .contact-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--text);
+      color: var(--surface);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 28px;
+    }
+
+    @media (max-width: 560px) {
+      .card {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 1.55rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <button class="btn" id="themeToggle" type="button" aria-label="切換深淺色主題">
+        <span id="themeIcon">🌙</span>
+        <span id="themeText">深色模式</span>
+      </button>
+    </div>
+
+    <!-- 個人簡介 -->
+    <section class="card hero">
+      <div class="avatar" aria-hidden="true">我</div>
+      <div class="hero-info">
+        <span class="badge">📍 台灣・桃園龜山</span>
+        <h1>你的名字（Your Name）</h1>
+        <p class="role">職稱／身份（例如：軟體工程師・產品設計師・研究生）</p>
+        <p class="bio">
+          在這裡寫一段簡短的自我介紹：你平常專注在什麼領域、喜歡解決什麼問題，以及目前正在探索或投入的方向。
+        </p>
+        <div class="actions">
+          <button class="btn btn-primary" id="copyEmailBtn" type="button" data-email="your.email@example.com">
+            ✉️ 複製信箱
+          </button>
+          <a class="btn" href="#projects">查看作品／經歷</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 專長與興趣 -->
+    <section class="card">
+      <h2>🛠️ 技能與興趣</h2>
+      <div class="tags">
+        <span class="tag">專長 1（如：前端開發）</span>
+        <span class="tag">專長 2（如：資料分析）</span>
+        <span class="tag">專長 3（如：UI/UX 設計）</span>
+        <span class="tag">興趣 1（如：攝影）</span>
+        <span class="tag">興趣 2（如：咖啡／閱讀）</span>
+      </div>
+    </section>
+
+    <!-- 經歷與代表專案 -->
+    <section class="card" id="projects">
+      <h2>🚀 經歷與精選專案</h2>
+      <div class="grid-2">
+        <article class="item-box">
+          <div class="item-meta">2024 – 至今｜公司／學校／個人專案</div>
+          <div class="item-title">專案或經歷名稱一</div>
+          <p class="item-desc">
+            簡述你負責的工作內容、使用的工具或技術，以及達成了什麼具體成果。
+          </p>
+        </article>
+        <article class="item-box">
+          <div class="item-meta">2022 – 2024｜公司／學校／個人專案</div>
+          <div class="item-title">專案或經歷名稱二</div>
+          <p class="item-desc">
+            簡述這段經歷帶給你的收穫、解決的難題，或是值得分享的亮點。
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 聯絡方式 -->
+    <section class="card">
+      <h2>🔗 聯絡與社群</h2>
+      <div class="contact-list">
+        <a class="btn" href="mailto:your.email@example.com">Email：your.email@example.com</a>
+        <a class="btn" href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="btn" href="https://instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> 你的名字. All rights reserved.
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">已複製信箱到剪貼簿</div>
+
+  <script>
+    const htmlEl = document.documentElement;
+    const themeToggle = document.getElementById("themeToggle");
+    const themeIcon = document.getElementById("themeIcon");
+    const themeText = document.getElementById("themeText");
+    const copyEmailBtn = document.getElementById("copyEmailBtn");
+    const toast = document.getElementById("toast");
+    const yearEl = document.getElementById("year");
+
+    yearEl.textContent = new Date().getFullYear();
+
+    function applyTheme(theme) {
+      htmlEl.setAttribute("data-theme", theme);
+      if (theme === "dark") {
+        themeIcon.textContent = "☀️";
+        themeText.textContent = "淺色模式";
+      } else {
+        themeIcon.textContent = "🌙";
+        themeText.textContent = "深色模式";
+      }
+    }
+
+    themeToggle.addEventListener("click", () => {
+      const next = htmlEl.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      applyTheme(next);
+    });
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2200);
+    }
+
+    copyEmailBtn.addEventListener("click", async () => {
+      const email = copyEmailBtn.getAttribute("data-email");
+      try {
+        await navigator.clipboard.writeText(email);
+        showToast(`已複製信箱：${email}`);
+      } catch {
+        showToast(`信箱：${email}`);
+      }
+    });
+  </script>
+</body>
+</html>
